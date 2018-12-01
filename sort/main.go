@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"math/rand"
 	"sort"
@@ -13,6 +14,7 @@ import (
 func InsertionSort(slice []int) {
 	for i := 1; i < len(slice); i++ {
 		// 以此为分界线，数组前面为已排序部分，后面为待排序部分
+		// 后面slice[i]会被覆盖，所以先取出
 		e := slice[i]
 		// 在待排序部分找到合适的位置插入
 		j := i - 1
@@ -51,46 +53,27 @@ func SelectionSort(slice []int) {
 	}
 }
 
-// BucketSort 桶排序 O(N+M) 稳定
-// 将待排序数据分别放入对应的桶中，放入桶中时进行插入排序，最后将桶中数据依次放入待排序数组。
-func BucketSort(slice []int) {
-	buckets := make(map[int][]int, len(slice)/10)
-	for _, n := range slice {
-		bi := bucketAt(n)
-		bucket := buckets[bi]
-		// bucket是已排序的桶，此处内嵌插入排序
-		i := 0
-		for ; i < len(bucket); i++ {
-			if n < bucket[i] {
-				bucket = insertAt(bucket, i, n)
-				break
+func SelectionSortV2(slice []int) {
+	for i := 0; i < len(slice); i++ {
+		// slice[i]位置保存临时最大值
+		for j := i + 1; j < len(slice); j++ {
+			if slice[i] > slice[j] {
+				slice[i], slice[j] = slice[j], slice[i]
 			}
 		}
-		if i == len(bucket) {
-			bucket = append(bucket, n)
-		}
-		buckets[bi] = bucket
-	}
-	var i = 0
-	for _, k := range mapKeys(buckets) {
-		bucket := buckets[k]
-		copy(slice[i:i+len(bucket)], bucket)
-		i += len(bucket)
 	}
 }
 
-// BucketSortV2 桶排序 O(N+M) 稳定
+// BucketSortV2 桶排序 O(N) 稳定
 // 将待排序数据分别放入对应的桶中，最后将桶中数据分别进行插入排序，然后依次放入待排序数组。
 func BucketSortV2(slice []int) {
-	buckets := make(map[int][]int, len(slice)/10)
+	const N = 10
+	buckets := make(map[int][]int, len(slice)/N)
 	for _, n := range slice {
-		bi := bucketAt(n)
-		bucket := buckets[bi]
-		bucket = append(bucket, n)
-		buckets[bi] = bucket
+		buckets[n/N] = append(buckets[n/N], n)
 	}
 	var i = 0
-	for _, k := range mapKeys(buckets) {
+	for _, k := range sortMapKeys(buckets) {
 		bucket := buckets[k]
 		InsertionSort(bucket)
 		copy(slice[i:i+len(bucket)], bucket)
@@ -98,8 +81,20 @@ func BucketSortV2(slice []int) {
 	}
 }
 
-func bucketAt(n int) int {
-	return n / 10
+func BucketSortV3(slice []int) {
+	const N = 10
+	var buckets = make(map[int][]int, len(slice)/N)
+	for _, n := range slice {
+		buckets[n/N] = append(buckets[n/N], n)
+	}
+	var i = 0
+	// 注意要顺序遍历buckets
+	for _, k := range sortMapKeys(buckets) {
+		bu := buckets[k]
+		BucketSortV2(bu)
+		copy(slice[i:i+len(bu)], bu)
+		i += len(bu)
+	}
 }
 
 // MergeSort 归并排序 O(NlogN) 稳定
@@ -112,31 +107,35 @@ func MergeSort(slice []int) {
 	s2 := slice[len(slice)/2:]
 	MergeSort(s1)
 	MergeSort(s2)
-	merge(slice, s1, s2)
+	copy(slice, merge(s1, s2))
 }
 
-func merge(s, s1, s2 []int) {
-	if len(s) != len(s1)+len(s2) {
-		panic(-1)
+// 用于归并的临时数组
+var mergeTmp = make([]int, 0)
+
+func merge(s1, s2 []int) []int {
+	n := len(s1) + len(s2)
+	if cap(mergeTmp) >= n {
+		mergeTmp = mergeTmp[:n]
+	} else {
+		mergeTmp = make([]int, n)
 	}
-	for i, i1, i2 := 0, 0, 0; i < len(s); i++ {
-		// i1>=len(s1)&&i2>=len(s2)的情况必然i>=len(s)，所以不会运行到此处
-		if i1 >= len(s1) {
-			copy(s[i:], s2[i2:])
-			break
-		}
-		if i2 >= len(s2) {
-			copy(s[i:], s1[i1:])
-			break
-		}
+	i, i1, i2 := 0, 0, 0
+	for ; i1 < len(s1) && i2 < len(s2); i++ {
 		if s1[i1] <= s2[i2] {
-			s[i] = s1[i1]
+			mergeTmp[i] = s1[i1]
 			i1++
 		} else {
-			s[i] = s2[i2]
+			mergeTmp[i] = s2[i2]
 			i2++
 		}
 	}
+	if i1 < len(s1) {
+		copy(mergeTmp[i:], s1[i1:])
+	} else if i2 < len(s2) {
+		copy(mergeTmp[i:], s2[i2:])
+	}
+	return mergeTmp
 }
 
 // QuickSort 快排 O(NlogN) 不稳定
@@ -146,7 +145,7 @@ func QuickSort(slice []int) {
 		return
 	}
 	// p(pivot)是基准值位置，l(left)是左侧哨兵位置，r(right)是右侧哨兵位置
-	// 此处直接用最左边的值作为基准值，更合理的方法是最左，最右，中间三个数，取中间的值作为基准值。
+	// 此处直接用最左边的值作为基准值，更合理的方法是最左，最右，中间三个数，取中间的值作为基准值。(见QuickSortV2)
 	p, l, r := 0, 0, len(slice)-1
 	for l < r {
 		// 从后面向前找小于基准数的位置
@@ -167,16 +166,67 @@ func QuickSort(slice []int) {
 	QuickSort(slice[l+1:])
 }
 
-func main() {
-	unsorted := randomInts(9)
+func QuickSortV2(slice []int) {
+	if len(slice) <= 1 {
+		return
+	}
+	doPivot(slice) // 处理基准点的值为，左中右的中间值，并将此值和slice[0]交换位置
+	p, l, r := 0, 0, len(slice)-1
+	for l < r {
+		for ; slice[r] >= slice[p] && l < r; r-- {
+		}
+		for ; slice[l] <= slice[p] && l < r; l++ {
+		}
+		if l >= r {
+			slice[l], slice[p] = slice[p], slice[l]
+			break
+		}
+		slice[l], slice[r] = slice[r], slice[l]
+	}
+	QuickSortV2(slice[:l])
+	QuickSortV2(slice[l+1:])
+}
 
-	withSort("InsertionSort=>", InsertionSort, copySlice(unsorted))
-	withSort("BubbleSort=>", BubbleSort, copySlice(unsorted))
-	withSort("SelectionSort=>", SelectionSort, copySlice(unsorted))
-	withSort("BucketSort=>", BucketSort, copySlice(unsorted))
-	withSort("BucketSortV2=>", BucketSortV2, copySlice(unsorted))
-	withSort("MergeSort=>", MergeSort, copySlice(unsorted))
-	withSort("QuickSort=>", QuickSort, copySlice(unsorted))
+func doPivot(slice []int) {
+	var max = 0
+	if slice[max] < slice[len(slice)/2] {
+		max = len(slice) / 2
+	}
+	if slice[max] < slice[len(slice)-1] {
+		max = len(slice) - 1
+	}
+	slice[0], slice[max] = slice[max], slice[0]
+}
+
+// FIX:
+func ShellSort(slice []int) {
+	var gap = len(slice) / 2
+	for ; gap > 0; gap /= 2 {
+		for i := 0; i < len(slice); i += gap {
+			if i+gap >= len(slice) {
+				InsertionSort(slice[i:])
+			} else {
+				InsertionSort(slice[i : i+gap])
+			}
+		}
+	}
+}
+
+func main() {
+	unsorted := randomInts(20)
+	fmt.Println("unsorted", unsorted)
+
+	withSort("InsertionSort=>", InsertionSort, unsorted, false)
+	withSort("BubbleSort=>", BubbleSort, unsorted, false)
+	withSort("SelectionSort=>", SelectionSort, unsorted, false)
+	withSort("SelectionSortV2=>", SelectionSortV2, unsorted, false)
+	withSort("BucketSortV2=>", BucketSortV2, unsorted, false)
+	withSort("BucketSortV3=>", BucketSortV3, unsorted, false)
+	withSort("MergeSort=>", MergeSort, unsorted, false)
+	withSort("QuickSort=>", QuickSort, unsorted, false)
+	withSort("QuickSortV2=>", QuickSortV2, unsorted, false)
+	withSort("ShellSort=>", ShellSort, unsorted, true)
+	withSort("Sort.Ints=>", sort.Ints, unsorted, false)
 }
 
 func randomInts(n int) []int {
@@ -199,25 +249,33 @@ func copySlice(slice []int) []int {
 	return res
 }
 
-func withSort(prompt string, sortfn func([]int), slice []int) time.Duration {
+func withSort(prompt string, sortfn func([]int), slice []int, debug bool) time.Duration {
+	copy1 := copySlice(slice)
 	t := time.Now()
-	sortfn(slice)
+	sortfn(copy1)
 	d := time.Now().Sub(t)
-	log.Println(prompt, sort.IntsAreSorted(slice), d)
-	if !sort.IntsAreSorted(slice) {
-		log.Println(prompt, slice)
+	copy2 := copySlice(copy1)
+	sort.Ints(copy2)
+	log.Println(prompt, equal(copy1, copy2), d)
+	if debug {
+		log.Println("sorted", copy1)
 	}
 	return d
 }
 
-func insertAt(bucket []int, i, n int) []int {
-	bucket = append(bucket, n)
-	copy(bucket[i+1:], bucket[i:])
-	bucket[i] = n
-	return bucket
+func equal(a, b []int) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
 }
 
-func mapKeys(buckets map[int][]int) []int {
+func sortMapKeys(buckets map[int][]int) []int {
 	keys := make([]int, 0, len(buckets))
 	for k := range buckets {
 		keys = append(keys, k)

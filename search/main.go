@@ -21,19 +21,6 @@ func BinarySearch(slice []int, t int) int {
 	return -1
 }
 
-// 找最长回文子串 O(N^3)
-func FindLongestPalindrome(s string) string {
-	var lps string
-	for i := 0; i < len(s); i++ {
-		for j := i + 1; j < len(s); j++ {
-			if isPalindrome(s[i:j+1]) && j-i > len(lps) {
-				lps = s[i : j+1]
-			}
-		}
-	}
-	return lps
-}
-
 // 找最长回文子串 O(N^2)
 // 从中心向两边找
 func FindLongestPalindromeV2(s string) string {
@@ -71,7 +58,7 @@ func isPalindrome(s string) bool {
 }
 
 // 找第K大的数
-// 利用快排算法的思想找
+// 利用快排算法的思想找，时间复杂度O(n)
 func FindMaxK(slice []int, k int) int {
 	if k > len(slice) || k <= 0 {
 		panic(-1)
@@ -103,9 +90,6 @@ func FindMaxK(slice []int, k int) int {
 
 func main() {
 	fmt.Println("BinarySearch=>", BinarySearch(sortedInts(10), 100))
-	fmt.Println("FindLongestPalindrome(abbabba)=>", FindLongestPalindrome("xxabbabbacc"))
-	fmt.Println("FindLongestPalindrome(aabbaa)=>", FindLongestPalindrome("xaabbaa"))
-	fmt.Println("FindLongestPalindrome(aba)=>", FindLongestPalindrome("abax"))
 	fmt.Println("FindLongestPalindromeV2(abbabba)=>", FindLongestPalindromeV2("xxabbabbacc"))
 	fmt.Println("FindLongestPalindromeV2(aabbaa)=>", FindLongestPalindromeV2("xaabbaa"))
 	fmt.Println("FindLongestPalindromeV2(aba)=>", FindLongestPalindromeV2("abax"))
