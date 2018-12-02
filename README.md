@@ -11,3 +11,4 @@
 - [equation-solving](./equation-solving): 方程求解
 - [find-num-pairs](./find-num-pairs): 找一对儿数（N个数（N<100000），其中两个数之和是m，找出这两个数）
 - [inverse-number](./inverse-number): 求逆数
+- [triangle-num](./triangle-num): 数字三角形(动态规划，计算路径最大和)
