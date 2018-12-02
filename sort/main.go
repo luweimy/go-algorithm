@@ -198,16 +198,19 @@ func doPivot(slice []int) {
 	slice[0], slice[max] = slice[max], slice[0]
 }
 
-// FIX:
+// ShellSort 希尔排序
+// 希尔排序是改进的插入排序，有增量gap，每次间隔gap个元素对比大小并交换位置，直到gap=1，则为插入排序
+// 因为gap=1之前，数据基本有序，此时用插入排序性能会更好
+// 讲解：https://www.cnblogs.com/chengxiao/p/6104371.html
 func ShellSort(slice []int) {
-	var gap = len(slice) / 2
-	for ; gap > 0; gap /= 2 {
-		for i := 0; i < len(slice); i += gap {
-			if i+gap >= len(slice) {
-				InsertionSort(slice[i:])
-			} else {
-				InsertionSort(slice[i : i+gap])
+	for gap := len(slice) / 2; gap >= 1; gap /= 2 {
+		for i := gap; i < len(slice); i++ {
+			e := slice[i]
+			j := i - gap
+			for ; j >= 0 && slice[j] > e; j -= gap {
+				slice[j+gap] = slice[j]
 			}
+			slice[j+gap] = e
 		}
 	}
 }
@@ -225,7 +228,7 @@ func main() {
 	withSort("MergeSort=>", MergeSort, unsorted, false)
 	withSort("QuickSort=>", QuickSort, unsorted, false)
 	withSort("QuickSortV2=>", QuickSortV2, unsorted, false)
-	withSort("ShellSort=>", ShellSort, unsorted, true)
+	withSort("ShellSort=>", ShellSort, unsorted, false)
 	withSort("Sort.Ints=>", sort.Ints, unsorted, false)
 }
 
