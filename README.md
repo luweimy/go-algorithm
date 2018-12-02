@@ -11,5 +11,5 @@
 | [sum24](./sum24) | 算24点（给出4个小于10的正整数，可以用加减乘数以及括号，使得最终结果为24） |
 | [equation-solving](./equation-solving) | 方程求解 |  
 | [find-num-pairs](./find-num-pairs) | 找一对儿数（N个数（N<100000），其中两个数之和是m，找出这两个数） |  
-| [inverse-number](./inverse-number) | 求逆数 |  
+| [inverse-num](./inverse-num) | 求逆数 |
 | [triangle-num](./triangle-num) | 数字三角形(动态规划，计算路径最大和) |  
