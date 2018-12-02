@@ -3,7 +3,7 @@
 | [adt](./adt) | 数据结构（树，链表）|
 | [search](./search) | 查找算法（二分，回文子串，查找第k大） |
 | [sort](./sort) | 排序算法（选择排序，插入排序，桶排序，归并排序，快速排序，希尔排序）|
-| [nqueue](./nqueue) | N皇后 |
+| [n-queue](./n-nqueue) | N皇后 |
 | [hannota](./hannota) | 汉诺塔 |
 | [expr](./expr) | 表达式求值（前缀求值，中缀求值） |
 | [stairs](./stairs) | 走台阶问题（每次走一步或者两步，上到N级有多少种走法） |
