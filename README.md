@@ -12,4 +12,5 @@
 | [equation-solving](./equation-solving) | 方程求解 |  
 | [find-num-pairs](./find-num-pairs) | 找一对儿数（N个数（N<100000），其中两个数之和是m，找出这两个数） |  
 | [inverse-num](./inverse-num) | 求逆数 |
-| [triangle-num](./triangle-num) | 数字三角形(动态规划，计算路径最大和) |  
+| [triangle-num](./triangle-num) | 数字三角形，计算路径最大和(DP) |
+| [longest-increasing-subsequence](./longest-increasing-subsequence) | 最长上升子序列(DP) |
