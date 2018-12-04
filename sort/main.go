@@ -200,7 +200,7 @@ func doPivot(slice []int) {
 
 // ShellSort 希尔排序
 // 希尔排序是改进的插入排序，有增量gap，每次间隔gap个元素对比大小并交换位置，直到gap=1，则为插入排序
-// 因为gap=1之前，数据基本有序，此时用插入排序性能会更好
+// 因为gap=1之前，使数据基本有序，此时用插入排序性能会更好
 // 讲解：https://www.cnblogs.com/chengxiao/p/6104371.html
 func ShellSort(slice []int) {
 	for gap := len(slice) / 2; gap >= 1; gap /= 2 {
