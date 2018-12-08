@@ -14,3 +14,5 @@
 | [inverse-num](./inverse-num) | 求逆数 |
 | [triangle-num](./triangle-num) | 数字三角形，计算路径最大和(DP) |
 | [longest-increasing-subsequence](./longest-increasing-subsequence) | 最长上升子序列(DP) |
+| [longest-common-subsequence](./longest-common-subsequence) | 最长公共子序列(DP) |
+| [best-addition-expr](./best-addition-expr) | 最佳加法表达式(DP) |
