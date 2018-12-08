@@ -16,3 +16,4 @@
 | [longest-increasing-subsequence](./longest-increasing-subsequence) | 最长上升子序列(DP) |
 | [longest-common-subsequence](./longest-common-subsequence) | 最长公共子序列(DP) |
 | [best-addition-expr](./best-addition-expr) | 最佳加法表达式(DP) |
+| [longest-skiing-path](./best-addition-expr) | 最长滑雪路径(DP) |
