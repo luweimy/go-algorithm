@@ -33,7 +33,7 @@ func contains(ns []int, t int) bool {
 }
 
 func main() {
-	// 图的存储：邻接矩阵
+	// 图的存储：邻接表
 	var adjacencyList = make([][]int, N)
 
 	// 无向图，节点0~9
