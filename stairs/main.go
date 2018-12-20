@@ -18,7 +18,7 @@ func stairs(n int) int {
 
 // 走台阶问题(DP)
 func stairs2(n int) int {
-	// 状态为当前台阶的走法
+	// 状态为上到第n阶台阶的走法
 	// f(n)=f(n-1)+f(n-2)
 	var dp = make([]int, n+1)
 	dp[1] = 1
