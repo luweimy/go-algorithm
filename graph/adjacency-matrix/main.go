@@ -11,14 +11,27 @@ func DFS(matrix [][]int, start, target int, path []int) ([]int, bool) {
 		return path, true
 	}
 	// 遍历起始点start的所有邻接点，为1才代表有路径
-	for i, b := range matrix[start] {
+	for node, b := range matrix[start] {
 		if b == 1 {
-			if pathNew, ok := DFS(matrix, i, target, path); ok {
+			// 避免死循环
+			if contains(path, node) {
+				continue
+			}
+			if pathNew, ok := DFS(matrix, node, target, path); ok {
 				return pathNew, true
 			}
 		}
 	}
 	return path, false
+}
+
+func contains(ns []int, t int) bool {
+	for _, n := range ns {
+		if n == t {
+			return true
+		}
+	}
+	return false
 }
 
 func main() {
@@ -34,12 +47,19 @@ func main() {
 	// 3-1-2
 	//   | |
 	//   4-8
-	matrix[1][2] = 1
+	matrix[1][2] = 1 // 为1则代表从1->2是联通的
 	matrix[1][3] = 1
 	matrix[1][4] = 1
 	matrix[4][8] = 1
 	matrix[3][9] = 1
 	matrix[2][8] = 1
+
+	// 上面只给正向设置了联通，下面循环给反向也设置上联通
+	for i, l := range matrix {
+		for j, e := range l {
+			matrix[j][i] = e
+		}
+	}
 
 	dump(matrix)
 	fmt.Println(DFS(matrix, 1, 8, nil))
