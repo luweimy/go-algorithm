@@ -6,7 +6,7 @@
 | [graph/adjacency-matrix](./graph/adjacency-matrix) | 图的存储：邻接矩阵 |
 | [graph/adjacency-list](./graph/adjacency-list) | 图的存储：邻接表 |
 | - | - |
-| [n-queue](./n-nqueue) | N皇后 |
+| [n-queue](./n-queue) | N皇后 |
 | [hannota](./hannota) | 汉诺塔 |
 | [expr](./expr) | 表达式求值（前缀求值，中缀求值） |
 | [divide-apple](./divide-apple) | 分苹果问题（把m个同样的苹果放在n个同样的盘子里，允许有的盘子空着不放，问有多少种不同的分法？） |
