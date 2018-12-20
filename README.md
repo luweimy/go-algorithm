@@ -16,3 +16,6 @@
 | [longest-increasing-subsequence](./longest-increasing-subsequence) | 最长上升子序列(DP) |
 | [longest-common-subsequence](./longest-common-subsequence) | 最长公共子序列(DP) |
 | [best-addition-expr](./best-addition-expr) | 最佳加法表达式(DP) |
+| [magical-pocket](./magical-pocket) | 神奇的口袋(DP) |
+| [backpack](./backpack) | 背包问题(DP) |
+| [cake-cutting](./cake_cutting) | 切蛋糕问题(DP) |
