@@ -3,7 +3,8 @@
 | [adt](./adt) | 数据结构（树，链表）|
 | [search](./search) | 查找算法（二分，回文子串，查找第k大） |
 | [sort](./sort) | 排序算法（选择排序，插入排序，桶排序，归并排序，快速排序，希尔排序）|
-| ------ | ------ |  
+| [graph-adjacency-matrix](./graph/adjacency-matrix) | 图的存储：邻接矩阵 |
+| - | - |
 | [n-queue](./n-nqueue) | N皇后 |
 | [hannota](./hannota) | 汉诺塔 |
 | [expr](./expr) | 表达式求值（前缀求值，中缀求值） |
@@ -13,6 +14,7 @@
 | [equation-solving](./equation-solving) | 方程求解 |  
 | [find-num-pairs](./find-num-pairs) | 找一对儿数（N个数（N<100000），其中两个数之和是m，找出这两个数） |  
 | [inverse-num](./inverse-num) | 求逆数 |
+| - | - |
 | [triangle-num](./triangle-num) | 数字三角形，计算路径最大和(DP) |
 | [longest-increasing-subsequence](./longest-increasing-subsequence) | 最长上升子序列(DP) |
 | [longest-common-subsequence](./longest-common-subsequence) | 最长公共子序列(DP) |
