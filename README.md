@@ -3,6 +3,7 @@
 | [adt](./adt) | 数据结构（树，链表）|
 | [search](./search) | 查找算法（二分，回文子串，查找第k大） |
 | [sort](./sort) | 排序算法（选择排序，插入排序，桶排序，归并排序，快速排序，希尔排序）|
+| ------ | ------ |  
 | [n-queue](./n-nqueue) | N皇后 |
 | [hannota](./hannota) | 汉诺塔 |
 | [expr](./expr) | 表达式求值（前缀求值，中缀求值） |
@@ -19,4 +20,4 @@
 | [longest-skiing-path](./longest-skiing-path) | 最长滑雪路径(DP) |
 | [magical-pocket](./magical-pocket) | 神奇的口袋(DP) |
 | [backpack](./backpack) | 背包问题(DP) |
-| [cake-cutting](./cake_cutting) | 切蛋糕问题(DP) |
+| [cake-cutting](./cake_cutting) | 切蛋糕问题(DP) TODO: |
