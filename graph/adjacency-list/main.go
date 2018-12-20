@@ -42,7 +42,7 @@ func main() {
 	// 3-1-2
 	//   | |
 	//   4-8
-	adjacencyList[1] = []int{2, 3}
+	adjacencyList[1] = []int{2, 3} // 代表1和2、3节点是联通的
 	adjacencyList[2] = []int{1, 8}
 	adjacencyList[3] = []int{1, 9}
 	adjacencyList[4] = []int{1, 8}
