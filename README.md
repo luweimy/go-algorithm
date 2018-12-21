@@ -5,6 +5,7 @@
 | [sort](./sort) | 排序算法（选择排序，插入排序，桶排序，归并排序，快速排序，希尔排序）|
 | [graph/adjacency-matrix](./graph/adjacency-matrix) | 图的存储：邻接矩阵 |
 | [graph/adjacency-list](./graph/adjacency-list) | 图的存储：邻接表 |
+| [graph/castle](./graph/castle) | 城堡问题 |
 | - | - |
 | [n-queue](./n-queen) | N皇后 |
 | [hannota](./hannota) | 汉诺塔 |
