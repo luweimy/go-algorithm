@@ -34,6 +34,7 @@ func CastleRoom(walls [][]int) [][]int {
 
 // 遍历单个联通的子图，返回房间的面积
 func DFS(walls, colors [][]int, i, j, color, area int) int {
+	// 此题不用判断也可以，因为四面都是墙，不会走到外面
 	if i < 0 || j < 0 || i >= len(walls) || j >= len(walls[i]) {
 		return area
 	}
