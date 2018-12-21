@@ -6,6 +6,7 @@
 | [graph/adjacency-matrix](./graph/adjacency-matrix) | 图的存储：邻接矩阵 |
 | [graph/adjacency-list](./graph/adjacency-list) | 图的存储：邻接表 |
 | [graph/castle](./graph/castle) | 城堡问题 |
+| [graph/step-grid](./graph/step-grid) | 踩方格 |
 | - | - |
 | [n-queue](./n-queen) | N皇后 |
 | [hannota](./hannota) | 汉诺塔 |
