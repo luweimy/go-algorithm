@@ -107,28 +107,35 @@ func MergeSort(slice []int) {
 	s2 := slice[len(slice)/2:]
 	MergeSort(s1)
 	MergeSort(s2)
-	merge(slice, s1, s2)
+	copy(slice, merge(s1, s2))
 }
 
-func merge(to, s1, s2 []int) {
-	if len(to) != len(s1)+len(s2) {
-		panic(-1)
+// 用于归并的临时数组
+var mergeTmp = make([]int, 0)
+
+func merge(s1, s2 []int) []int {
+	n := len(s1) + len(s2)
+	if cap(mergeTmp) >= n {
+		mergeTmp = mergeTmp[:n]
+	} else {
+		mergeTmp = make([]int, n)
 	}
 	i, i1, i2 := 0, 0, 0
 	for ; i1 < len(s1) && i2 < len(s2); i++ {
 		if s1[i1] <= s2[i2] {
-			to[i] = s1[i1]
+			mergeTmp[i] = s1[i1]
 			i1++
 		} else {
-			to[i] = s2[i2]
+			mergeTmp[i] = s2[i2]
 			i2++
 		}
 	}
 	if i1 < len(s1) {
-		copy(to[i:], s1[i1:])
+		copy(mergeTmp[i:], s1[i1:])
 	} else if i2 < len(s2) {
-		copy(to[i:], s2[i2:])
+		copy(mergeTmp[i:], s2[i2:])
 	}
+	return mergeTmp
 }
 
 // QuickSort 快排 O(NlogN) 不稳定
@@ -209,7 +216,7 @@ func ShellSort(slice []int) {
 }
 
 func main() {
-	unsorted := randomInts(20000)
+	unsorted := randomInts(20)
 	fmt.Println("unsorted", unsorted)
 
 	withSort("InsertionSort=>", InsertionSort, unsorted, false)
