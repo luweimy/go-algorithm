@@ -154,6 +154,72 @@ func WalkBFS(node *BinaryTreeNode, visit func(node *BinaryTreeNode)) {
 	}
 }
 
+// 前序中序推倒后序
+func CalcPostOrder(pre, in []int) []int {
+	if len(pre) != len(in) {
+		panic(-1)
+	}
+	if len(pre) == 0 {
+		return []int{}
+	}
+	if len(pre) == 1 {
+		return []int{pre[0]}
+	}
+	var post = make([]int, 0, len(pre))
+	var root = pre[0]
+	var index = sliceIndex(in, root)
+	if index < 0 {
+		panic(-1)
+	}
+
+	var l = CalcPostOrder(pre[1:index+1], in[:index])
+	var r = CalcPostOrder(pre[index+1:], in[index+1:])
+	post = append(post, l...)
+	post = append(post, r...)
+	return append(post, root)
+}
+
+func sliceIndex(s []int, t int) int {
+	for i, e := range s {
+		if e == t {
+			return i
+		}
+	}
+	return -1
+}
+
+// 返回值（是否平衡，以当前为根的最大深度计数）
+func checkBalance(node *BinaryTreeNode) (bool, int) {
+	if node == nil {
+		return true, 0
+	}
+	leftBalance, leftDepth := checkBalance(node.L)
+	rightBalance, rightDepth := checkBalance(node.R)
+
+	depth := maxInt(leftDepth, rightDepth) + 1
+	if !leftBalance || !rightBalance {
+		return false, depth
+	}
+	if absInt(leftDepth-rightDepth) <= 1 {
+		return true, depth
+	}
+	return false, depth
+}
+
+func maxInt(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func absInt(a int) int {
+	if a >= 0 {
+		return a
+	}
+	return -a
+}
+
 func main() {
 	nums := make([]int, 0)
 	for i := 0; i < 10; i++ {
@@ -182,4 +248,6 @@ func main() {
 	WalkBFS(btree, func(node *BinaryTreeNode) {
 		fmt.Println("WalkBFS=>", node.Value)
 	})
+	// 4,3,2,8,9,7,6,5,1
+	fmt.Println("CalcPostOrder=>", CalcPostOrder([]int{1, 2, 3, 4, 5, 6, 7, 8, 9}, []int{2, 4, 3, 1, 5, 8, 7, 9, 6}))
 }
