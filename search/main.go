@@ -26,7 +26,7 @@ func BinarySearch(slice []int, t int) int {
 func LongestPalindrome(s string) string {
 	var lps string
 	for i := 0; i < len(s); i++ {
-		for n := 1; i-n >= 0 && i+n < len(s); n++ {
+		for n := 0; i-n >= 0 && i+n < len(s); n++ {
 			// 判断奇数位的回文串
 			ps := s[i-n : i+n+1]
 			if isPalindrome(ps) && len(ps) > len(lps) {
@@ -94,6 +94,7 @@ func main() {
 	fmt.Println("LongestPalindrome(aabbaa)=>", LongestPalindrome("xaabbaa"))
 	fmt.Println("LongestPalindrome(aba)=>", LongestPalindrome("abax"))
 	fmt.Println("LongestPalindrome(aba)=>", LongestPalindrome("abax"))
+	fmt.Println("LongestPalindrome(aab)=>", LongestPalindrome("aab"))
 
 	ints := randomInts(10)
 	fmt.Println("FindMaxK(k=6)=>", ints, FindMaxK(ints, 6))
